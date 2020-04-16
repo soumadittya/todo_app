@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if all_items %}
+
+          <li class="list-group-item disabled" aria-disabled="true">All items have been displayed below.</li>
+        <br>
+        <br>
+        {% for thing in all_items %}
+
+            {% if thing.completed %}
+
+            <ul class="list-group">
+  <li class="list-group-item enabled" aria-disabled="true">
+      {{ thing.id }} <a href = "{% url 'delete' thing.id %}">Delete </a></li>
+                <li class="list-group-item">{{ thing.item_main }}</li>
+                <li class="list-group-item">{{ thing.completed }}
+                <a href = "{% url 'uncross' thing.id %}">Mark it not done</a></li>
+            </ul>
+
+                {% else %}
+
+                <li class="list-group-item enabled" aria-disabled="true">
+      {{ thing.id }} <a href = "{% url 'delete' thing.id %}">Delete </a></li>
+                <li class="list-group-item">{{ thing.item_main }}</li>
+                <li class="list-group-item">{{ thing.completed }}
+                <a href = "{% url 'cross_off' thing.id %}">Mark it done</a></li>
+
+            {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}
